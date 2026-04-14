@@ -3,8 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Button Logger</title>
+
+    <!-- автообновление каждые 5 сек -->
+    <meta http-equiv="refresh" content="5">
 </head>
 <body>
+
+    <h2>🌡 Текущая температура</h2>
+
+    {% if latest_temperature %}
+        <h1>{{ latest_temperature }} °C</h1>
+    {% else %}
+        <p>Нет данных</p>
+    {% endif %}
+
+    <h3>Последние измерения:</h3>
+
+    {% if temps %}
+        <table border="1">
+            <tr>
+                <th>Температура</th>
+                <th>Время</th>
+            </tr>
+            {% for t in temps %}
+            <tr>
+                <td>{{ t.value }}</td>
+                <td>{{ t.time }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    <hr>
+
     <h2>Управление кнопками</h2>
 
     <form action="/add_click" method="post">
@@ -32,5 +63,6 @@
             {% endfor %}
         </table>
     {% endif %}
+
 </body>
 </html>

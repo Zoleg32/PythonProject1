@@ -70,6 +70,8 @@ import psycopg2
 from datetime import datetime
 import os
 
+latest_temperature = None
+temperature_history = []
 app = Flask(__name__)
 
 
@@ -118,7 +120,12 @@ def init_db():
 
 @app.route("/", methods=["GET"])
 def index():
-    return render_template("index.html", clicks=None)
+    return render_template(
+        "index.html",
+        clicks=None,
+        latest_temperature=latest_temperature,
+        temps=temperature_history
+    )
 
 
 @app.route("/add_click", methods=["POST"])
@@ -152,6 +159,30 @@ def show_clicks():
         print(f"Error showing clicks: {e}")
         return render_template("index.html", clicks=None)
 
+@app.route("/add_temperature", methods=["POST"])
+def add_temperature():
+    global latest_temperature, temperature_history
+
+    try:
+        data = request.get_json()
+        temperature = data.get("temperature")
+
+        latest_temperature = temperature
+
+        # храним последние 10 значений
+        temperature_history.append({
+            "value": temperature,
+            "time": datetime.now()
+        })
+
+        if len(temperature_history) > 10:
+            temperature_history.pop(0)
+
+        return {"status": "ok"}, 200
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return {"status": "error"}, 500
 
 if __name__ == "__main__":
     init_db()
