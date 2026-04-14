@@ -65,7 +65,6 @@
 #     init_db()
 #     app.run(host="0.0.0.0", port=5000)
 
-
 from flask import Flask, render_template, request, redirect
 import psycopg2
 from datetime import datetime
