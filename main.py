@@ -79,7 +79,7 @@ def get_db_config():
     # Проверяем, запущено ли в Railway (есть переменная RAILWAY_ENVIRONMENT)
     if os.getenv("RAILWAY_ENVIRONMENT"):
         # Railway предоставляет DATABASE_URL
-        database_url = os.getenv("DATABASE_URL")
+        database_url = os.getenv("postgresql://postgres:nbCxFJHwjXaHiMfhNRhiKAgUZRddVpwY@postgres.railway.internal:5432/railway")
         if database_url:
             return {"dsn": database_url}
 
