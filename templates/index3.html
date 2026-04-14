@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Button Logger</title>
+</head>
+<body>
+    <h2>Управление кнопками</h2>
+
+    <form action="/add_click" method="post">
+        <button type="submit">Записать время нажатия</button>
+    </form>
+
+    <br>
+
+    <form action="/show_clicks" method="post">
+        <button type="submit">Показать историю нажатий</button>
+    </form>
+
+    {% if clicks %}
+        <h3>История нажатий:</h3>
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>Время нажатия</th>
+            </tr>
+            {% for row in clicks %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
