@@ -77,28 +77,26 @@ app = Flask(__name__)
 # Универсальная конфигурация для Railway и локальной разработки
 def get_db_config():
     # Проверяем, запущено ли в Railway (есть переменная RAILWAY_ENVIRONMENT)
-    if os.getenv("RAILWAY_ENVIRONMENT"):
-        # Railway предоставляет DATABASE_URL
-        database_url = os.getenv("postgresql://postgres:nbCxFJHwjXaHiMfhNRhiKAgUZRddVpwY@postgres.railway.internal:5432/railway")
-        if database_url:
-            return {"dsn": database_url}
+    database_url = "postgresql://postgres:nbCxFJHwjXaHiMfhNRhiKAgUZRddVpwY@postgres.railway.internal:5432/railway"
+    # if database_url:
+    return database_url
+    # if os.getenv("RAILWAY_ENVIRONMENT"):
+    #     # Railway предоставляет DATABASE_URL
+
 
     # Локальная разработка или кастомные переменные
-    return {
-        "dbname": os.getenv("DB_NAME", "button_db"),
-        "user": os.getenv("DB_USER", "postgres"),
-        "password": os.getenv("DB_PASSWORD", "postgres"),
-        "host": os.getenv("DB_HOST", "localhost"),
-        "port": os.getenv("DB_PORT", "5432")
-    }
+    # return {
+    #     "dbname": os.getenv("button_db"),
+    #     "user": os.getenv("postgres"),
+    #     "password": os.getenv("nbCxFJHwjXaHiMfhNRhiKAgUZRddVpwY"),
+    #     "host": os.getenv("monorail.proxy.rlwy.net"),
+    #     "port": os.getenv("18740")
+    # }
 
 
 def get_db_connection():
     config = get_db_config()
-    if "dsn" in config:
-        return psycopg2.connect(config["dsn"])
-    else:
-        return psycopg2.connect(**config)
+    return psycopg2.connect(config,sslmode='require')
 
 
 def init_db():
