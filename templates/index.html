@@ -1,104 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<title>my_index</title>
-	<link rel="stylesheet" href="/static/style.css">
+    <meta charset="UTF-8">
+    <title>Button Logger</title>
 </head>
-
 <body>
-<header>
-  <p> Сервер домашньої автоматизації&nbsp;</p>
-  <p>&nbsp;</p>
-</header>
-<h1>Контроль керування&nbsp;</h1>
-<table width="900" border="1" cellspacing="10" cellpadding="10">
-  <tbody>
-    <tr>
-      <td>&nbsp;
-		  <h2>Стан системи опалення&nbsp;</h2>
-		  <table width="450" border="0" cellspacing="1" cellpadding="1">
-  <tbody>
-    <tr>
-      <td>&nbsp;
-		<h3>Температура у спальні</h3></td>
-      <td>&nbsp;
-			<span id="Temp1">{{Temperature1}}</span>
-		</td>
-    </tr>
-    <tr>
-      <td>&nbsp;
-		<h3>Температура у кухні</h3>
-		</td>
-      <td>&nbsp;
-			<span id="Temp2">{{Temperature2}}</span>
-		</td>
-    </tr>
-    <tr>
-      <td>&nbsp;
-		<h3>Режим керування котлом</h3>
-		</td>
-      <td>&nbsp;
-			<span id="Manual">{{Manual}}</span>
-		</td>
-    </tr>
-	<tr>
-      <td>&nbsp;
-		<h3>Стан котла</h3>
-		</td>
-      <td>&nbsp;
-			<span id="State">{{State}}</span>
-		</td>
-    </tr>
-  </tbody>
-</table>
+    <h2>Управление кнопками</h2>
 
-		  
-	</td>
-      <td>&nbsp;
-		<h2>Керування системой опалення</h2>
-		<h2></h2>
-		<br>
-		  	<input type="button" id="relay_button" class="" />
-		<h3>Налаштування увімк./вимк. котла</h3>
-		<form id="theForm" action="/setLimits" method="POST">
-		<div>
-			<label for="min_lim">Поріг вмикання опалення в автоматичному режимі</label>
-			<input id="min_lim" name="min_lim" size="5" type="number" min="0" max="40" step="0.1" value="{{ N1 }}" required>
-		</div>
-		<br>
-		<div>
-			<label for="max_lim">Порог вимикання опалення в автоматичному режимі</label>
-			<input id="max_lim" name="max_lim" size="5" type="number" min="0" max="40" step="0.1" value="{{ N2 }}" required>
-		</div>
-		<br>
-		<div>		
-			<input name="avto" id="avto" type="checkbox" value="box1" {{AV}}/>
-			<label for="avto">Ручне керування котлом</label>
-		</div>	
-		<h3>Керування котлом по датчику Т</h3>
-		<div>
-			<input type="radio" id="r_bed" name="r_room" {{ROOM1}} value="on">
-			<label for="r_bed">спальні</label>
-			<input type="radio" id="r_kitch" name="r_room" {{ROOM2}} value="off">
-			<label for="r_kitch">кухні</label>
-		</div>
-		<br>
-		<div>
-			<button id='sync_lim' type="submit" role="button">Ввод нових значень</button>
-		</div>
-		</form>
-		</td>
-    </tr>
-  </tbody>
-</table>
-        <div class="div-can">
-            <canvas id="myChart" width="700" height="400">
-            </canvas>
-        </div>
-	<!-- нас интересует данная часть -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js"></script>
-	<script src="../static/main2.js"></script>
+    <form action="/add_click" method="post">
+        <button type="submit">Записать время нажатия</button>
+    </form>
+
+    <br>
+
+    <form action="/show_clicks" method="post">
+        <button type="submit">Показать историю нажатий</button>
+    </form>
+
+    {% if clicks %}
+        <h3>История нажатий:</h3>
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>Время нажатия</th>
+            </tr>
+            {% for row in clicks %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
 </body>
 </html>
