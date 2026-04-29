@@ -78,7 +78,7 @@ app = Flask(__name__)
 # Универсальная конфигурация для Railway и локальной разработки
 def get_db_config():
     # Проверяем, запущено ли в Railway (есть переменная RAILWAY_ENVIRONMENT)
-    database_url = "postgresql://postgres:nbCxFJHwjXaHiMfhNRhiKAgUZRddVpwY@postgres.railway.internal:5432/railway"
+    database_url = "postgresql://button_db_user:149w3oC9GOMAQ9VBSbFpsGESmtmvAk1Y@dpg-d7otghosfn5c73fpu4kg-a/button_db"
     # if database_url:
     return database_url
     # if os.getenv("RAILWAY_ENVIRONMENT"):
