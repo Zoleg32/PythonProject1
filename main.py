@@ -148,6 +148,7 @@ def add_click():
 @app.route("/show_clicks", methods=["POST"])
 def show_clicks():
     try:
+
         conn = get_db_connection()
         cur = conn.cursor()
         cur.execute("SELECT id, click_time FROM button_clicks ORDER BY id DESC")
