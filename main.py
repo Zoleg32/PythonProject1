@@ -186,7 +186,7 @@ def add_temperature():
         return {"status": "error"}, 500
 
 if __name__ == "__main__":
-    init_db()
+    # init_db()
     port = int(os.getenv("PORT", 5000))  # Railway использует PORT
     app.run(host="0.0.0.0", port=port)
 
